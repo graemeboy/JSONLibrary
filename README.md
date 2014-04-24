@@ -24,12 +24,12 @@ String eduInstitutions = "{ \"schools\": [ { \"name\" : \"Grinnell College\", \"
         
 Instantiate the decoder:
 
-```
+```java
 JSONDecoder queryDecoder = new JSONDecoder (eduInstitutions);
 ```
 
 Create an object that we can use to query with
-```
+```java
 JSONObject queryObj = queryDecoder.jsonDecode ();
 ```
 
@@ -38,7 +38,7 @@ Query using "get()", "where", "whereLess", and "whereGreater". whereLess and whe
 ### E.g. 1 Query all of the liberal arts colleges
 
 Let's get an ArrayList with all of the liberal arts colleges:
-```
+```java
 String liberalArts = ((JSONArray)queryObj.get("schools")).where("type", "Liberal Arts").toString ();
 ```
 
@@ -71,12 +71,12 @@ Given our data set, this returns:
 
 What if we only wanted to find institutions that had more than 25,000 students? Use this:
 
-```
+```java
 String big = ((JSONArray)queryObj.get("schools")).whereGreater ("numStudents", 25000).toString ();
 ```
 
 Given our dataset, this produces:
-```
+```javascript
 [{
     "name": Harvard University,
     "type": University,
