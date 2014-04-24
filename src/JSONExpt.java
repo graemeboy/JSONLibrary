@@ -33,11 +33,13 @@ public class JSONExpt
     String liberalArts = ((JSONArray)queryObj.get("schools")).where("type", "Liberal Arts").toString ();
     
     String small = ((JSONArray)queryObj.get("schools")).whereLess ("numStudents", 2000).toString ();
+    String big = ((JSONArray)queryObj.get("schools")).whereGreater ("numStudents", 25000).toString ();
     
     pen.println("* Universities are: * \n" + universities);
     pen.println("* Liberal Arts Colleges are: * \n" + liberalArts);
     
     pen.println("* Small Colleges are: * \n" + small);
+    pen.println("* Big Universities are: * \n" + big);
     
     
     pen.println("\n** Experimenting with Getting Values from Complex Objects ** \n");
