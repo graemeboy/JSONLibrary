@@ -27,4 +27,14 @@ public class JSONBoolean
   {
     return (this.isTrue && other.isTrue) || (!this.isTrue && !other.isTrue);
   }//equals(JSONBoolean)
+  
+  public String type ()
+  {
+    return "Boolean";
+  } // type()
+  
+  public <T> boolean compareTo(T val)
+  {
+    return ((val instanceof Boolean) && (val == this.get()));
+  } // compareTo
 } // class JSONSpecial

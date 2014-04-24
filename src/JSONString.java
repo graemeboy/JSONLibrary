@@ -22,4 +22,14 @@ public class JSONString
   {
     return this.string;
   }
+  
+  public String type ()
+  {
+    return "String";
+  } // type()
+  
+  public <T> boolean compareTo(T val)
+  {
+    return ((val instanceof String) && this.string.compareTo ((String) val) == 0);
+  } // compareTo
 }

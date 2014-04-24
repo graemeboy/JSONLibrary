@@ -11,9 +11,39 @@ public class JSONExpt
   {
     PrintWriter pen = new PrintWriter (System.out, true);
 
+    // Queries
+ // Queries
+    pen.println("** Experimenting with Query Language ** \n");
+    String queryJSON = "{ \"schools\": [ { \"name\" : \"Grinnell College\", \"type\": \"Liberal Arts\", \"numStudents\": 1655 } ,"
+        + "{ \"name\" : \"Carlton College\", \"type\": \"Liberal Arts\", \"numStudents\": 2018 }, "
+        + "{ \"name\" : \"Vassar College\", \"type\": \"Liberal Arts\", \"numStudents\": 2477 }, "
+        + "{ \"name\" : \"Middlebury College\", \"type\": \"Liberal Arts\", \"numStudents\": 2499 }, "
+        + "{ \"name\" : \"Wesleyan University\", \"type\": \"Liberal Arts\", \"numStudents\": 3262 }, "
+        + "{ \"name\" : \"Harvard University\", \"type\": \"University\", \"numStudents\": 28147 }, "
+        + "{ \"name\" : \"Stanford University\", \"type\": \"University\", \"numStudents\": 15877 }, "
+        + "{ \"name\" : \"University of Chicago\", \"type\": \"University\", \"numStudents\": 15245 }, "
+        + "{ \"name\" : \"University of Iowa\", \"type\": \"University\", \"numStudents\": 31065 }, "
+        + "{ \"name\": \"Cornell University\", \"type\": \"University\", \"numStudents\": 21000 } ] }";
+    
+    
+    JSONDecoder queryDecoder = new JSONDecoder (queryJSON);
+    JSONObject queryObj = queryDecoder.jsonDecode ();
+    
+    String universities = ((JSONArray)queryObj.get("schools")).where("type", "University").toString ();
+    String liberalArts = ((JSONArray)queryObj.get("schools")).where("type", "Liberal Arts").toString ();
+    
+    String small = ((JSONArray)queryObj.get("schools")).whereLess ("numStudents", 2000).toString ();
+    
+    pen.println("* Universities are: * \n" + universities);
+    pen.println("* Liberal Arts Colleges are: * \n" + liberalArts);
+    
+    pen.println("* Small Colleges are: * \n" + small);
+    
+    
+    pen.println("\n** Experimenting with Getting Values from Complex Objects ** \n");
     String json = "{\n\"person\":\n{\"first\" :\n \"Clark\" , \"last\" : \"Kent\","
                   + "\"age\":23,\"class year\":2014, \"male\":true,"
-                  + "\"friends\": [ \"Sam\" , \"Joe\", \"Lilly\" ] , \"gpa\": 3.92, \"hasCat?\": true, \"crimes\": 0 }}";
+                  + "\"friends\": [ \"Sam\",\"Joe\", \"Lilly\" ] , \"gpa\": 3.92,\"hasCat\": true, \"crimes\": 0 }}";
 
     JSONDecoder decoder = new JSONDecoder (json);
 

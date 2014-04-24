@@ -19,7 +19,7 @@ public class DecoderTest
   {
     String goodDay = "{\"good day?\": true}";
     JSONDecoder decoder = new JSONDecoder (goodDay);
-    JSONObject obj = (JSONObject) decoder.jsonDecode ();
+    JSONObject obj = decoder.jsonDecode ();
 
     assertEquals ("testing true", true, obj.get ("good day?").get ());
   }// testTrue
@@ -31,7 +31,7 @@ public class DecoderTest
   {
     String eatingGrapes = "{\"eating grapes?\": false}";
     JSONDecoder decoder = new JSONDecoder (eatingGrapes);
-    JSONObject obj = (JSONObject) decoder.jsonDecode ();
+    JSONObject obj = decoder.jsonDecode ();
 
     assertEquals ("testing false", false, obj.get ("eating grapes?").get ());
   }// testFasle
@@ -43,7 +43,7 @@ public class DecoderTest
   {
     String catsName = "{\"cat's name\": null}";
     JSONDecoder decoder = new JSONDecoder (catsName);
-    JSONObject obj = (JSONObject) decoder.jsonDecode ();
+    JSONObject obj =  decoder.jsonDecode ();
 
     assertEquals ("testing null", null, obj.get ("cat's name").get ());
 
@@ -56,7 +56,7 @@ public class DecoderTest
   {
     String idealScore = "{\"ideal exam score\": 100}";
     JSONDecoder decoder = new JSONDecoder (idealScore);
-    JSONObject obj = (JSONObject) decoder.jsonDecode ();
+    JSONObject obj = decoder.jsonDecode ();
 
     assertEquals ("testing number", 100,
                   ((JSONNumber) obj.get ("ideal exam score")).getInteger ());
@@ -73,7 +73,7 @@ public class DecoderTest
   {
     String json = "{\"name\": \"Graeme\"}";
     JSONDecoder decoder = new JSONDecoder (json);
-    JSONObject obj = (JSONObject) decoder.jsonDecode ();
+    JSONObject obj = decoder.jsonDecode ();
 
     assertEquals ("testing string", "Graeme", obj.get ("name").get ());
   }// testString
@@ -87,7 +87,7 @@ public class DecoderTest
     JSONDecoder decoder = new JSONDecoder (scores);
     // This is messy, so we need to add a wrapper that will take care of this
     // stuff. It ought to be one operation to get the correct data and type.
-    JSONObject obj = (JSONObject) decoder.jsonDecode ();
+    JSONObject obj =  decoder.jsonDecode ();
     JSONObject person = (JSONObject) obj.get ("person");
     int idealScore = ((JSONNumber) person.get ("age")).getInteger ();
     assertEquals ("testing nested", 23, idealScore);

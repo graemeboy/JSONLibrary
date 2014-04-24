@@ -39,4 +39,13 @@ public class JSONConstant
     return String.valueOf (this.isTrue);
   } // toString ()
 
+  public String type ()
+  {
+    return "Constant";
+  } // type()
+  
+  public <T> boolean compareTo (T val)
+  {
+    return (this.get() == val);
+  }
 } // class JSONSpecial

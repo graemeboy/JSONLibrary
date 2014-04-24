@@ -95,4 +95,14 @@ public class JSONObject
   {
     return "[Object]";
   }
+  
+  public String type ()
+  {
+    return "Object";
+  } // type()
+  
+  public <T> boolean compareTo(T val)
+  {
+    return (this.toString().compareTo(val.toString()) == 0);
+  }
 }

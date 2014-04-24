@@ -15,7 +15,7 @@ public class JSONDecoder
    * 
    * @return the parsed object
    */
-  public JSONVal
+  public JSONObject
     jsonDecode ()
   {
     return parseObject ();
@@ -189,7 +189,6 @@ public class JSONDecoder
   {
     while (currentChar () == ' ')
       {
-        // System.out.println ("Removing whitespace");
         incChar ();
       } // while
   } // trim space
@@ -199,7 +198,6 @@ public class JSONDecoder
   {
     while (currentChar () == '\n')
       {
-        // System.out.println ("Found newline");
         incChar ();
       } // while
   }
@@ -209,7 +207,7 @@ public class JSONDecoder
   {
     char ch = currentChar ();
     while (currentChar () != '}' && nextChar () != ',')
-      // scan past the boolean
+      // scan past the constant value
       ; // no Operation
     return new JSONConstant (ch);
   } // parseSpecial
@@ -241,10 +239,12 @@ public class JSONDecoder
             incChar ();
           } // if
         trim ();
-        if (currentChar () == ',')
+        // End of objects can be skipped once their objects are parsed
+        if (currentChar () == '}' )
           {
             incChar ();
           } // if
+        trim ();
       } // while
     return array;
   } // parseArray()
@@ -284,10 +284,11 @@ public class JSONDecoder
   {
     String stringOut = "";
     int startingIndex = incChar (); // skip the first character
+    
     while (nextChar () != '"')
       ; // No operation.
     stringOut = this.jsonString.substring (startingIndex, this.i);
-
+    
     return stringOut;
   } // parseStringInner()
 

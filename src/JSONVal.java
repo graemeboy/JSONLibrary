@@ -7,5 +7,10 @@ interface JSONVal
 
   public Object
     get ();
+  
+  public String
+  type (); // is this necessary?
+
+  public <T> boolean compareTo(T valIn);
 
 }
