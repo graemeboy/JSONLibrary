@@ -4,7 +4,7 @@ public class JSONDecoder
   int i;
 
   // Constructor
-  public JSONDecoder (String stringIn)
+  public JSONDecoder(String stringIn)
   {
     this.i = 0;
     this.jsonString = stringIn;
@@ -15,10 +15,9 @@ public class JSONDecoder
    * 
    * @return the parsed object
    */
-  public JSONObject
-    jsonDecode ()
+  public JSONObject jsonDecode()
   {
-    return parseObject ();
+    return parseObject();
   } // jsonDecode()
 
   /**
@@ -27,10 +26,9 @@ public class JSONDecoder
    * @return character at index i + 1 of jsonString
    * @post this.i is incremented
    */
-  public char
-    nextChar ()
+  public char nextChar()
   {
-    return this.jsonString.charAt (++this.i);
+    return this.jsonString.charAt(++this.i);
   } // nextChar
 
   /**
@@ -40,10 +38,9 @@ public class JSONDecoder
    * @return character at index i of jsonString
    * @post: increments i after returning the character at index i of jsonString
    */
-  public char
-    curCharInc ()
+  public char curCharInc()
   {
-    return this.jsonString.charAt (this.i++);
+    return this.jsonString.charAt(this.i++);
   } // curCharInc ()
 
   /**
@@ -51,10 +48,9 @@ public class JSONDecoder
    * 
    * @return the character at index i of jsonString
    */
-  public char
-    currentChar ()
+  public char currentChar()
   {
-    return this.jsonString.charAt (this.i);
+    return this.jsonString.charAt(this.i);
   } // currentChar
 
   /**
@@ -63,8 +59,7 @@ public class JSONDecoder
    * @return the incremented value of i
    * @post this.i is incremented
    */
-  public int
-    incChar ()
+  public int incChar()
   {
     return ++this.i;
   } // incChar()
@@ -77,21 +72,20 @@ public class JSONDecoder
    * @pre value is either string, number, object, array, true, false, or null
    * @post the parse function for the type encountered is called
    */
-  public JSONVal
-    parseVal ()
+  public JSONVal parseVal()
   {
-    // Values are always preceeded by a colon.
-    incChar (); // move past the colon.
-    trim (); // remove whitespace after '"' or '['
+    // Values are always preceded by a colon.
+    incChar(); // move past the colon.
+    trim(); // remove whitespace after '"' or '['
 
-    if (currentChar () == ':')
+    if (currentChar() == ':')
       {
-        incChar (); // move past ':'
+        incChar(); // move past ':'
       }
-    trim (); // remove whitespace after ':'
+    trim(); // remove whitespace after ':'
 
     char ch;
-    ch = currentChar ();
+    ch = currentChar();
     /*
      * According to json.org, the acceptable types are: string, number, object,
      * array, true, false, and null
@@ -109,18 +103,18 @@ public class JSONDecoder
         case '8':
         case '9':
         case '-': // for negative numbers
-          return parseNumber ();
+          return parseNumber();
         case '"': // string
-          return parseString ();
+          return parseString();
         case '[': // array
-          return parseArray ();
+          return parseArray();
         case '{': // new object
-          return parseObject ();
+          return parseObject();
           // True
         case 't': // has to be true
         case 'f': // has to be false
         case 'n': // has to be null
-          return parseConstant ();
+          return parseConstant();
       } // switch
     return null;
   }
@@ -131,36 +125,35 @@ public class JSONDecoder
    * @return JSONObject
    * @post all key and value pairs (seperated by commas) will be added
    */
-  public JSONObject
-    parseObject ()
+  public JSONObject parseObject()
   {
-    JSONObject object = new JSONObject ();
+    JSONObject object = new JSONObject();
     char ch;
     do
       {
-        if (currentChar () == ',' || currentChar () == '{')
+        if (currentChar() == ',' || currentChar() == '{')
           {
-            incChar (); // move past ',' or '{'
-            trim ();
+            incChar(); // move past ',' or '{'
+            trim();
           } // if
-        else if (currentChar () == '}')
+        else if (currentChar() == '}')
           {
             return null;
           } // else if
-        if (currentChar () == '"')
+        if (currentChar() == '"')
           {
-            object.addKey (parseKey ());
+            object.addKey(parseKey());
           } // if
-        trim (); // after '"'
-        object.addVal (parseVal ()); // this will recurse if objects are inside
-        ch = currentChar (); // reset char to current
+        trim(); // after '"'
+        object.addVal(parseVal()); // this will recurse if objects are inside
+        ch = currentChar(); // reset char to current
         if (ch != '}' && ch != ',')
           {
-            incChar ();
+            incChar();
           } // if
-        trim ();
+        trim();
       } // do
-    while (currentChar () == ',');
+    while (currentChar() == ',');
 
     return object;
   } // parseObject
@@ -171,12 +164,11 @@ public class JSONDecoder
    * @post this.i is incremented by the number of consecutive whitespaces,
    *       newlines, and then whitespaces again (as is common in formatted JSON)
    */
-  public void
-    trim ()
+  public void trim()
   {
-    trimSpace ();
-    trimLines ();
-    trimSpace ();
+    trimSpace();
+    trimLines();
+    trimSpace();
   } // trim ()
 
   /**
@@ -184,42 +176,38 @@ public class JSONDecoder
    * 
    * @post this.i is incremented by the number of consecutive whitespaces
    */
-  public void
-    trimSpace ()
+  public void trimSpace()
   {
-    while (currentChar () == ' ')
+    while (currentChar() == ' ')
       {
-        incChar ();
+        incChar();
       } // while
   } // trim space
 
-  public void
-    trimLines ()
+  public void trimLines()
   {
-    while (currentChar () == '\n')
+    while (currentChar() == '\n')
       {
-        incChar ();
+        incChar();
       } // while
   }
 
-  public JSONConstant
-    parseConstant ()
+  public JSONConstant parseConstant()
   {
-    char ch = currentChar ();
-    while (currentChar () != '}' && nextChar () != ',')
+    char ch = currentChar();
+    while (currentChar() != '}' && nextChar() != ',')
       // scan past the constant value
       ; // no Operation
-    return new JSONConstant (ch);
+    return new JSONConstant(ch);
   } // parseSpecial
 
   /**
    * 
    * @return a JSONString character containing
    */
-  public JSONString
-    parseString ()
+  public JSONString parseString()
   {
-    return new JSONString (parseStringInner ());
+    return new JSONString(parseStringInner());
   } // parseString ()
 
   /**
@@ -227,24 +215,23 @@ public class JSONDecoder
    * 
    * @return JSONArray
    */
-  public JSONArray
-    parseArray ()
+  public JSONArray parseArray()
   {
-    JSONArray array = new JSONArray ();
-    while (currentChar () != ']')
+    JSONArray array = new JSONArray();
+    while (currentChar() != ']')
       {
-        array.add (parseVal ());
-        if (currentChar () == '"')
+        array.add(parseVal());
+        if (currentChar() == '"')
           {
-            incChar ();
+            incChar();
           } // if
-        trim ();
+        trim();
         // End of objects can be skipped once their objects are parsed
-        if (currentChar () == '}' )
+        if (currentChar() == '}')
           {
-            incChar ();
+            incChar();
           } // if
-        trim ();
+        trim();
       } // while
     return array;
   } // parseArray()
@@ -254,23 +241,22 @@ public class JSONDecoder
    * 
    * @return a JSONNumber object that contains the value of the number
    */
-  public JSONNumber
-    parseNumber ()
+  public JSONNumber parseNumber()
   {
     // As with string, go until reach a '"' and then get substring
     int startingIndex = this.i;
     char ch;
     boolean decimal = false;
-    while ((ch = currentChar ()) != ',' && currentChar () != '}')
+    while ((ch = currentChar()) != ',' && currentChar() != '}')
       {
         if (ch == '.')
           {
             decimal = true; // contains a ., therefore is decimal
           } // if
-        ch = nextChar ();
+        ch = nextChar();
       } // while
-    return new JSONNumber (this.jsonString.substring (startingIndex, this.i),
-                           decimal);
+    return new JSONNumber(this.jsonString.substring(startingIndex, this.i),
+                          decimal);
   } // parseNumber()
 
   /**
@@ -279,16 +265,15 @@ public class JSONDecoder
    * @return the value within the string quotes
    * @post this.i is incremented by the number of characters within the string
    */
-  public String
-    parseStringInner ()
+  public String parseStringInner()
   {
     String stringOut = "";
-    int startingIndex = incChar (); // skip the first character
-    
-    while (nextChar () != '"')
+    int startingIndex = incChar(); // skip the first character
+
+    while (nextChar() != '"')
       ; // No operation.
-    stringOut = this.jsonString.substring (startingIndex, this.i);
-    
+    stringOut = this.jsonString.substring(startingIndex, this.i);
+
     return stringOut;
   } // parseStringInner()
 
@@ -297,9 +282,8 @@ public class JSONDecoder
    * 
    * @return the key of the key-value pair
    */
-  public String
-    parseKey ()
+  public String parseKey()
   {
-    return parseStringInner (); // this is the key
+    return parseStringInner(); // this is the key
   } // parseKey (String)
 }
